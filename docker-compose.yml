@@ -1,0 +1,25 @@
+# Use root/example as user/password credentials
+version: '3.4'
+
+services:
+
+  mongo:
+    image: mongo
+    container_name: gw_mongo
+    ports:
+      - '27017-27019:27017-27019'
+    env_file:
+      - ./database.env
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+      - ./db:/data/db
+      - ./dump:/data/dump
+      
+  mongo-express:
+    image: mongo-express
+    container_name: gw_mongo_express
+    ports:
+      - 8081:8081
+    env_file:
+      - ./database.env
+      
